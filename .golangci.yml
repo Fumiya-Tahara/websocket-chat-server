@@ -1,0 +1,28 @@
+run:
+  go: '1.22.2'
+linters-settings:
+  tagliatelle:
+    case:
+      use-field-name: true
+      rules:
+        json: snake
+linters:
+  enable-all: true
+  disable:
+    - deadcode
+    - ifshort
+    - structcheck
+    - maligned
+    - varcheck
+    - exhaustivestruct
+    - nosnakecase
+    - golint
+    - interfacer
+    - scopelint
+    - depguard
+    - exhaustruct
+    - gci
+    - testpackage
+    - varnamelen
+    - ireturn
+    - wrapcheck
