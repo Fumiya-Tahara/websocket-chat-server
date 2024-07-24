@@ -14,6 +14,7 @@ func main() {
 			"message": "pong",
 		})
 	})
+
 	err := r.Run()
 	if err != nil {
 		log.Fatal(err)
