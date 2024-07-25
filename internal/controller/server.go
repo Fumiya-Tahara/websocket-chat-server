@@ -1,13 +1,22 @@
 package controller
 
-import "github.com/gin-gonic/gin"
+import (
+	"log"
+	"net/http"
+
+	"github.com/gin-gonic/gin"
+)
 
 func StartServer(r *gin.Engine, handler HandlerInterface) {
 	r.GET("/connection", handler.Connection)
 	r.GET("/hello", func(c *gin.Context) {
-		c.JSON(200, gin.H{
+		c.JSON(http.StatusOK, gin.H{
 			"message": "Hello, World!",
 		})
 	})
-	r.Run()
+
+	err := r.Run()
+	if err != nil {
+		log.Fatalf("could not start server: %v", err)
+	}
 }

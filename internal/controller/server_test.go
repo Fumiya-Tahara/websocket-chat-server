@@ -1,12 +1,14 @@
 package controller
 
 import (
+	"context"
 	"net/http"
 	"testing"
+	"time"
 
 	"github.com/gin-gonic/gin"
 	"github.com/golang/mock/gomock"
-	"github.com/stretchr/testify/assert"
+	"github.com/stretchr/testify/require"
 )
 
 const (
@@ -14,6 +16,8 @@ const (
 )
 
 func TestStartServer(t *testing.T) {
+	t.Parallel()
+
 	r := gin.Default()
 
 	ctrl := gomock.NewController(t)
@@ -25,8 +29,14 @@ func TestStartServer(t *testing.T) {
 
 	go StartServer(r, handler)
 
-	req, _ := http.NewRequest("GET", BaseURL+"/connection", nil)
+	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
+	defer cancel()
+
+	req, err := http.NewRequestWithContext(ctx, http.MethodGet, BaseURL+"/connection", nil)
+	require.NoError(t, err, "could not create request")
+
 	res, err := http.DefaultClient.Do(req)
-	assert.NoError(t, err, "could not send request")
+	require.NoError(t, err, "could not send request")
+
 	defer res.Body.Close()
 }
