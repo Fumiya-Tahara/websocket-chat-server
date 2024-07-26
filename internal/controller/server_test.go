@@ -12,7 +12,7 @@ import (
 )
 
 const (
-	BaseURL = "http://localhost:8080"
+	testBaseURL = "http://localhost:8080"
 )
 
 func TestStartServer(t *testing.T) {
@@ -32,7 +32,7 @@ func TestStartServer(t *testing.T) {
 	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
 	defer cancel()
 
-	req, err := http.NewRequestWithContext(ctx, http.MethodGet, BaseURL+"/connection", nil)
+	req, err := http.NewRequestWithContext(ctx, http.MethodGet, testBaseURL+"/connection", nil)
 	require.NoError(t, err, "could not create request")
 
 	res, err := http.DefaultClient.Do(req)
