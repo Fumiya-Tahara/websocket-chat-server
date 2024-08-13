@@ -26,6 +26,7 @@ func TestStartServer(t *testing.T) {
 	handler := NewMockHandlerInterface(ctrl)
 
 	handler.EXPECT().Connection(gomock.Any()).Times(1)
+	handler.EXPECT().BroadcastMessages().Times(1)
 
 	go StartServer(r, handler)
 
