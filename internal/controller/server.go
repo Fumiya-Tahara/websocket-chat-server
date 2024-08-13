@@ -9,6 +9,8 @@ import (
 
 func StartServer(r *gin.Engine, handler HandlerInterface) {
 	r.GET("/connection", handler.Connection)
+	go handler.BroadcastMessages()
+
 	r.GET("/hello", func(c *gin.Context) {
 		c.JSON(http.StatusOK, gin.H{
 			"message": "Hello, World!",
